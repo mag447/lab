@@ -1,0 +1,106 @@
+import java.util.Random;
+class Number
+{
+	int num;
+}
+
+class Generator extends Thread
+{
+	Number n;
+	Random r = new Random();
+
+	Generator(Number n)
+	{
+		this.n=n;
+	}
+	
+	public void run()
+	{
+		for(int i=1; i<=6; i++)
+		{
+			n.num = r.nextInt(10);
+		}
+
+			System.out.println("\n Generator Number: " + n.num);
+				try
+				{
+					Thread.sleep(1000);
+				}
+				catch(InterruptedException e)
+				{
+					System.out.println(e);			
+				}
+	}
+}
+
+class Square extends Thread
+{
+	Number n;
+	Square(Number n)
+	{
+		this.n = n;
+	}
+	public void run()
+	{
+		for(int i = 1;i <= 6; i++)
+		{
+			if(n.num % 2 == 0)
+			{
+				System.out.println("Square of " + n.num + " = " + (n.num * n.num));
+			}
+		}
+			
+		try
+		{
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException e)
+		{
+			System.out.println(e);
+		}
+		
+	}
+}
+class Cube extends Thread
+{
+	Number n;
+	Cube(Number n)
+	{
+		this.n = n;
+	}
+	public void run()
+	{
+		for(int i = 1;i <= 6; i++)
+		{
+			if(n.num % 2 != 0)
+			{
+				System.out.println("Cube of " + n.num + " = " + (n.num * n.num* n.num));
+			}
+		}
+			
+			try
+			{
+				Thread.sleep(1000);
+			}
+			catch(InterruptedException e)
+			{
+				System.out.println(e);
+			}
+		
+	}
+}
+
+public class MultiThreadSyn							
+{
+	public static void main(String[] args)
+	{
+		Number n = new Number();
+		Generator t1 = new Generator(n);
+		Square t2 = new Square(n);
+		Cube t3 = new Cube(n);
+
+		t1.start();
+		t2.start();
+		t3.start();
+	}
+}
